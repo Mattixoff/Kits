@@ -42,5 +42,11 @@ kitPreviewDisabled: "&cKit preview is disabled."
 inventoryNotExists: "&cThat inventory doesn't exists."
 onlyPlayerCommand: "&cOnly a player can use this command."
 commandPreviewOtherCorrect: "&aPreviewing kit &7%kit% &ato &e%player%&a."
+commandTokenError: "&cYou need to use: &7/kit token <kit> (optional)<player>"
+commandTokenError2: "&cThere was an error giving the kit token: &7%error%"
+commandTokenCorrect: "&aKit token for &7%kit% &areceived."
+commandTokenOtherCorrect: "&aKit token for &7%kit% &agiven to &e%player%&a!"
+tokenReceived: "&aYou received a kit token for &7%kit%&a!"
+kitNoDisplayItem: "&cThis kit doesn't have a display item configured."
 
 

@@ -18,6 +18,7 @@ import pk.ajneb97.model.internal.PlayerKitsMessageResult;
 import pk.ajneb97.model.inventory.KitInventory;
 import pk.ajneb97.model.item.KitItem;
 import pk.ajneb97.utils.ActionUtils;
+import pk.ajneb97.utils.ItemUtils;
 import pk.ajneb97.utils.OtherUtils;
 import pk.ajneb97.utils.PlayerUtils;
 import java.util.ArrayList;
@@ -436,6 +437,35 @@ public class KitsManager {
             }
         }
         return true;
+    }
+
+    public PlayerKitsMessageResult giveKitToken(Player player, Kit kit){
+        FileConfiguration messagesFile = plugin.getConfigsManager().getMessagesConfigManager().getConfig();
+        MessagesManager msgManager = plugin.getMessagesManager();
+        KitItemManager kitItemManager = plugin.getKitItemManager();
+
+        // Use the default display item as the token
+        KitItem displayItem = kit.getDisplayItemDefault();
+        if(displayItem == null){
+            return PlayerKitsMessageResult.error(messagesFile.getString("kitNoDisplayItem"));
+        }
+
+        // Create the token item from the display item
+        ItemStack tokenItem = kitItemManager.createItemFromKitItem(displayItem.clone(), player, kit);
+
+        // Add the kit name as NBT data to identify this as a token
+        tokenItem = ItemUtils.setTagStringItem(plugin, tokenItem, "playerkits_token", kit.getName());
+
+        // Check if player has inventory space
+        PlayerInventory playerInventory = player.getInventory();
+        if(playerInventory.firstEmpty() == -1){
+            return PlayerKitsMessageResult.error(messagesFile.getString("noSpaceError"));
+        }
+
+        // Give the token item to the player
+        playerInventory.addItem(tokenItem);
+
+        return PlayerKitsMessageResult.success();
     }
 
 }
